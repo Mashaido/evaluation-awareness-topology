@@ -1,5 +1,5 @@
 # evaluation-awareness-topology
-Detecting evaluation awareness in frontier models through non-linear structures in activation space, where linear probes are known to fail
+Detecting evaluation awareness in frontier models through non-linear structures in activation space, where linear probes are known to fail.
 
 
 # Beyond Linearity: Topological Signatures of Evaluation Awareness Under Adversarial Obfuscation
