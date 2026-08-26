@@ -19,7 +19,7 @@ or correcting evaluation-aware behavior once detected.
 Builds on prior work showing that a model's output can remain fully stable while
 its underlying representational structure shifts meaningfully underneath it:
 
-- []Beyond Accuracy: Stable Predictions, Unstable Topology in Transformer Representations](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=q3iC8uAAAAAJ&citation_for_view=q3iC8uAAAAAJ:qjMakFHDy7sC)
+- [Beyond Accuracy: Stable Predictions, Unstable Topology in Transformer Representations](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=q3iC8uAAAAAJ&citation_for_view=q3iC8uAAAAAJ:qjMakFHDy7sC)
 - [On the Geometric Limits of Transformer Defenses against Obfuscation Attacks: Latent Embedding Collapse & Performance–Robustness Gap](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=q3iC8uAAAAAJ&citation_for_view=q3iC8uAAAAAJ:2osOgNQ5qMEC)
 
 ## Repository structure
@@ -32,8 +32,8 @@ its underlying representational structure shifts meaningfully underneath it:
 
 ## Setup
 
-[filled in once environment is finalized]
+[TBD once environment is finalized]
 
 ## Citation
 
-[fill in once published]
+[TBD once published]
