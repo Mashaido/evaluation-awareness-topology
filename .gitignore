@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# GitHub's auto-generated Python template above
+
+# ML-specific additions below
+wandb/
+data/raw/
+data/activations/
+checkpoints/
+*.pt
+*.ckpt
+.DS_Store
