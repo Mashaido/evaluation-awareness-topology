@@ -9,10 +9,12 @@ Usage (inside the container, with ~/envs/ea first on PYTHONPATH):
 """
 import argparse
 import glob
+import json
 import os
 import sys
 import time
 import traceback
+from dataclasses import fields
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
@@ -32,6 +34,32 @@ def snapshot(repo):
 
 def gb(n):
     return round(n / 1e9, 1)
+
+
+# Settings that newer PEFT versions write into adapter_config.json but the container's
+# older PEFT (0.13.2) does not know. We drop them only if they are switched off, which
+# means the adapter is a plain LoRA that the older PEFT applies exactly.
+SWITCHED_OFF = {
+    "corda_config": None, "eva_config": None, "exclude_modules": None, "lora_bias": False,
+    "qalora_group_size": 16, "target_parameters": None, "trainable_token_indices": None,
+    "use_qalora": False,
+}
+
+
+def load_lora_config(adapter_path):
+    from peft import LoraConfig
+    with open(os.path.join(adapter_path, "adapter_config.json")) as f:
+        raw = json.load(f)
+    known = {fld.name for fld in fields(LoraConfig)}
+    dropped = {k: v for k, v in raw.items() if k not in known}
+    for k, v in dropped.items():
+        if k not in SWITCHED_OFF or SWITCHED_OFF[k] != v:
+            raise ValueError("adapter config has a setting the container's PEFT does not know and "
+                             "that is switched on: " + k + " = " + repr(v))
+    clean = {k: v for k, v in raw.items() if k in known}
+    print("adapter settings dropped (all switched off):", dropped, flush=True)
+    print("LoRA rank", clean["r"], "alpha", clean["lora_alpha"], "targets", sorted(clean["target_modules"]), flush=True)
+    return LoraConfig(**clean)
 
 
 def report_gpu(tag):
@@ -78,7 +106,7 @@ def main():
 
     from peft import PeftModel
     t1 = time.time()
-    model = PeftModel.from_pretrained(model, adapter_path)
+    model = PeftModel.from_pretrained(model, adapter_path, config=load_lora_config(adapter_path))
     model.eval()
     print("adapter loaded in", round(time.time() - t1), "s", flush=True)
     report_gpu("after adapter")
