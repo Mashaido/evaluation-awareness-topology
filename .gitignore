@@ -227,3 +227,35 @@ checkpoints/
 *.pt
 *.ckpt
 .DS_Store
+
+# Project additions: authors' data and anything derived from it must stay out of the public repo
+steering-eval-data/
+**/steering-eval-data/
+*.zip
+logs/
+slurm_logs/
+*.out
+*.err
+
+# Activation vectors and model files
+*.npz
+*.npy
+*.pth
+*.safetensors
+*.bin
+*.gguf
+
+# Per item results (these contain prompts or responses); aggregate tables and figures go in results/
+out/
+results/private/
+
+# Keys and tokens
+.env.*
+*.key
+*.pem
+*.token
+hf_token*
+.netrc
+
+# Editor settings
+.vscode/
